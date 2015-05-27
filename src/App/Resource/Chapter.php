@@ -106,22 +106,6 @@ class Chapter extends Resource
         self::response(self::STATUS_OK, array(), array('GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'));
     }
 
-//     /**
-//      * @return \App\Service\User
-//      */
-//     public function getUserService()
-//     {
-//         return $this->userService;
-//     }
-
-//     /**
-//      * @param \App\Service\User $userService
-//      */
-//     public function setUserService($userService)
-//     {
-//         $this->userService = $userService;
-//     }
-
     /**
      * [Setter]
      *

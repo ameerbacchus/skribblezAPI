@@ -8,11 +8,16 @@ use App\Entity\Chapter as ChapterEntity;
 class Chapter extends Service
 {
 
-    public function getChapter($id)
+    /**
+     * Get a single chapter by GUID
+     *
+     * @param string $guid
+     * @return ChapterEntity
+     */
+    public function getChapter($guid)
     {
         $repository = $this->getEntityManager()->getRepository('App\Entity\Chapter');
-//         $chapter = $repository->find($id);
-        $chapter = $repository->findOneBy(['guid' => $id]);
+        $chapter = $repository->findChapter($guid);
 
         return $chapter;
     }

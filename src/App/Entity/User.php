@@ -7,51 +7,84 @@ use Doctrine\ORM\Mapping;
 
 /**
  * @Entity
- * @Table(name="user")
+ * @Table(name="users")
  */
-class User extends Entity
+class User extends Base
 {
+
     /**
-     * @Column(type="string", length=255)
+     * Type of user (enumeration): Facebook, Twitter, Google, etc...
+     * @var integer
+     *
+     * @Column(name="type", type="integer")
+     */
+    public $type;
+
+    /**
+     * UID - corresponds to a social network id (Facebook, Twitter, Google, etc...)
      * @var string
+     *
+     * @Column(name="uid", type="string", length=50)
      */
-    protected $email;
+    public $uid;
 
     /**
-     * @Column(type="string", length=32)
+     * First Name
      * @var string
+     *
+     * @Column(name="first_name", type="string", length=100)
      */
-    protected $password;
+    public $firstName;
 
     /**
-     * @return string
+     * First Name
+     * @var string
+     *
+     * @Column(name="last_name", type="string", length=100)
      */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+    public $lastName;
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
+//     /**
+//      * @Column(type="string", length=255)
+//      * @var string
+//      */
+//     protected $email;
 
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+//     /**
+//      * @Column(type="string", length=32)
+//      * @var string
+//      */
+//     protected $password;
 
-    /**
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = md5($password);
-    }
+//     /**
+//      * @return string
+//      */
+//     public function getEmail()
+//     {
+//         return $this->email;
+//     }
+
+//     /**
+//      * @param string $email
+//      */
+//     public function setEmail($email)
+//     {
+//         $this->email = $email;
+//     }
+
+//     /**
+//      * @return string
+//      */
+//     public function getPassword()
+//     {
+//         return $this->password;
+//     }
+
+//     /**
+//      * @param string $password
+//      */
+//     public function setPassword($password)
+//     {
+//         $this->password = md5($password);
+//     }
 }

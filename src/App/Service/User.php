@@ -8,129 +8,143 @@ use App\Entity\User as UserEntity;
 class User extends Service
 {
     /**
-     * @param $id
-     * @return object
+     * Get a single user by GUID
+     *
+     * @param string $guid
+     * @return UserEntity
      */
-    public function getUser($id)
-    {
-        /**
-         * @var \App\Entity\User $user
-         */
-        $repository = $this->getEntityManager()->getRepository('App\Entity\User');
-        $user = $repository->find($id);
-
-        if ($user === null) {
-            return null;
-        }
-
-        return array(
-            'id' => $user->getId(),
-            'created' => $user->getCreated(),
-            'updated' => $user->getUpdated(),
-            'email' => $user->getEmail()
-        );
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getUsers()
+    public function getUser($guid)
     {
         $repository = $this->getEntityManager()->getRepository('App\Entity\User');
-        $users = $repository->findAll();
+        $user = $repository->findOneBy(['guid' => $guid]);
 
-        if (empty($users)) {
-            return null;
-        }
-
-        /**
-         * @var \App\Entity\User $user
-         */
-        $data = array();
-        foreach ($users as $user)
-        {
-            $data[] = array(
-                'id' => $user->getId(),
-                'created' => $user->getCreated(),
-                'updated' => $user->getUpdated(),
-                'email' => $user->getEmail(),
-            );
-        }
-
-        return $data;
+        return $user;
     }
 
-    /**
-     * @param $email
-     * @param $password
-     * @return array
-     */
-    public function createUser($email, $password)
-    {
-        $user = new UserEntity();
-        $user->setEmail($email);
-        $user->setPassword($password);
+//     /**
+//      * @param $id
+//      * @return object
+//      */
+//     public function getUser($id)
+//     {
+//         /**
+//          * @var \App\Entity\User $user
+//          */
+//         $repository = $this->getEntityManager()->getRepository('App\Entity\User');
+//         $user = $repository->find($id);
 
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+//         if ($user === null) {
+//             return null;
+//         }
 
-        return array(
-            'id' => $user->getId(),
-            'created' => $user->getCreated(),
-            'updated' => $user->getUpdated(),
-            'email' => $user->getEmail()
-        );
-    }
+//         return array(
+//             'id' => $user->getId(),
+//             'created' => $user->getCreated(),
+//             'updated' => $user->getUpdated(),
+//             'email' => $user->getEmail()
+//         );
+//     }
 
-    /**
-     * @param $id
-     * @param $email
-     * @param $password
-     * @return array|null
-     */
-    public function updateUser($id, $email, $password)
-    {
-        /**
-         * @var \App\Entity\User $user
-         */
-        $repository = $this->getEntityManager()->getRepository('App\Entity\User');
-        $user = $repository->find($id);
+//     /**
+//      * @return array|null
+//      */
+//     public function getUsers()
+//     {
+//         $repository = $this->getEntityManager()->getRepository('App\Entity\User');
+//         $users = $repository->findAll();
 
-        if ($user === null) {
-            return null;
-        }
+//         if (empty($users)) {
+//             return null;
+//         }
 
-        $user->setEmail($email);
-        $user->setPassword($password);
-        $user->setUpdated(new \DateTime());
+//         /**
+//          * @var \App\Entity\User $user
+//          */
+//         $data = array();
+//         foreach ($users as $user)
+//         {
+//             $data[] = array(
+//                 'id' => $user->getId(),
+//                 'created' => $user->getCreated(),
+//                 'updated' => $user->getUpdated(),
+//                 'email' => $user->getEmail(),
+//             );
+//         }
 
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+//         return $data;
+//     }
 
-        return array(
-            'id' => $user->getId(),
-            'created' => $user->getCreated(),
-            'updated' => $user->getUpdated(),
-            'email' => $user->getEmail()
-        );
-    }
+//     /**
+//      * @param $email
+//      * @param $password
+//      * @return array
+//      */
+//     public function createUser($email, $password)
+//     {
+//         $user = new UserEntity();
+//         $user->setEmail($email);
+//         $user->setPassword($password);
 
-    public function deleteUser($id)
-    {
-        /**
-         * @var \App\Entity\User $user
-         */
-        $repository = $this->getEntityManager()->getRepository('App\Entity\User');
-        $user = $repository->find($id);
+//         $this->getEntityManager()->persist($user);
+//         $this->getEntityManager()->flush();
 
-        if ($user === null) {
-            return false;
-        }
+//         return array(
+//             'id' => $user->getId(),
+//             'created' => $user->getCreated(),
+//             'updated' => $user->getUpdated(),
+//             'email' => $user->getEmail()
+//         );
+//     }
 
-        $this->getEntityManager()->remove($user);
-        $this->getEntityManager()->flush();
+//     /**
+//      * @param $id
+//      * @param $email
+//      * @param $password
+//      * @return array|null
+//      */
+//     public function updateUser($id, $email, $password)
+//     {
+//         /**
+//          * @var \App\Entity\User $user
+//          */
+//         $repository = $this->getEntityManager()->getRepository('App\Entity\User');
+//         $user = $repository->find($id);
 
-        return true;
-    }
+//         if ($user === null) {
+//             return null;
+//         }
+
+//         $user->setEmail($email);
+//         $user->setPassword($password);
+//         $user->setUpdated(new \DateTime());
+
+//         $this->getEntityManager()->persist($user);
+//         $this->getEntityManager()->flush();
+
+//         return array(
+//             'id' => $user->getId(),
+//             'created' => $user->getCreated(),
+//             'updated' => $user->getUpdated(),
+//             'email' => $user->getEmail()
+//         );
+//     }
+
+//     public function deleteUser($id)
+//     {
+//         /**
+//          * @var \App\Entity\User $user
+//          */
+//         $repository = $this->getEntityManager()->getRepository('App\Entity\User');
+//         $user = $repository->find($id);
+
+//         if ($user === null) {
+//             return false;
+//         }
+
+//         $this->getEntityManager()->remove($user);
+//         $this->getEntityManager()->flush();
+
+//         return true;
+//     }
 
 }

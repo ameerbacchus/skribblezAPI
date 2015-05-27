@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Entity\Base;
+use App\Entity\User;
 use Doctrine\ORM\Mapping;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="App\Repository\Chapter")
  * @Table(name="chapters")
+ *
  */
 class Chapter extends Base
 {
@@ -31,7 +33,7 @@ class Chapter extends Base
      * Chapter title
      * @var string
      *
-     * @Column(name="title", type="string", nullable=true)
+     * @Column(name="title", type="string", length=100, nullable=true)
      */
     public $title;
 
@@ -56,6 +58,9 @@ class Chapter extends Base
      *
      * Author
      * @var User
+     *
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="author_id", referencedColumnName="_guid")
      */
     public $author;
 
