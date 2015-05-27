@@ -58,6 +58,7 @@ abstract class Base
     public function __construct()
     {
         $now = time();
+        $this->setGuid(com_create_guid());
         $this->setCreated($now);
         $this->setUpdated($now);
     }

@@ -4,13 +4,19 @@ namespace App\Resource;
 
 use App\Resource;
 use App\Service\Chapter as ChapterService;
+use App\Service\User as UserService;
 
 class Chapter extends Resource
 {
     /**
-     * @var \App\Service\Chapter
+     * @var ChapterService
      */
     private $chapterService;
+
+    /**
+     * @var UserService
+     */
+    private $userService;
 
     /**
      * Get user service
@@ -18,6 +24,18 @@ class Chapter extends Resource
     public function init()
     {
         $this->setChapterService(new ChapterService($this->getEntityManager()));
+        $this->setUserService(new UserService($this->getEntityManager()));
+    }
+
+    /**
+     * Get starter chapters
+     *
+     * @param integer $page
+     */
+    public function getStarters($page = 1)
+    {
+        $starters = $this->chapterService->getStarters($page);
+        self::response(self::STATUS_OK, ['starters' => $starters]);
     }
 
     /**
@@ -25,14 +43,14 @@ class Chapter extends Resource
      *
      * @param string $guid
      */
-    public function get($guid = null)
+    public function getChapterDetails($guid = null)
     {
         if ($guid === null) {
             self::response(self::STATUS_NOT_FOUND);
             return;
         }
 
-        $chapter = $this->chapterService->getChapter($guid);
+        $chapter = $this->chapterService->getChapterDetails($guid);
 
         if ($chapter === null) {
             self::response(self::STATUS_NOT_FOUND);
@@ -40,6 +58,46 @@ class Chapter extends Resource
         }
 
         self::response(self::STATUS_OK, ['chapter' => $chapter]);
+    }
+
+    /**
+     * Post a new starter chapter
+     */
+    public function postStarter()
+    {
+        $slim = $this->getSlim();
+        $request = $slim->request();
+
+        $authorGuid = $request->params('author');
+        $author = $this->getUserService()->getUser($authorGuid);
+        $title = $request->params('title');
+        $body = $request->params('body');
+
+        $newStarter = $this->getChapterService()->createChapter($author, $body, 1, $title);
+
+        self::response(self::STATUS_OK, ['starter' => $newStarter]);
+    }
+
+    /**
+     * Post a new chapter
+     */
+    public function postChapter()
+    {
+        $slim = $this->getSlim();
+        $request = $slim->request();
+
+        $authorGuid = $request->params('author');
+        $author = $this->getUserService()->getUser($authorGuid);
+        $body = $request->params('body');
+        $prevChapter = $this->getChapterService()->getChapter($request->params('prevChapter'));
+        $parentChapter = $prevChapter->getSequence() === 1 ? $prevChapter : $prevChapter->getParent();
+        $sequence = $prevChapter->getSequence() + 1;
+
+        $newChapter = $this->getChapterService()->createChapter($author, $body, $sequence, null, $prevChapter, $parentChapter);
+
+        // @todo -- create path entry (table pending)
+
+        self::response(self::STATUS_OK, ['chapter' => $newChapter]);
     }
 
     /**
@@ -109,8 +167,8 @@ class Chapter extends Resource
     /**
      * [Setter]
      *
-     * @param \App\Service\Chapter $chapterService
-     * @return User
+     * @param ChapterService $chapterService
+     * @return Chapter
      */
     public function setChapterService($chapterService)
     {
@@ -119,11 +177,35 @@ class Chapter extends Resource
     }
 
     /**
-     * @return \App\Service\Chapter
+     * [Getter]
+     *
+     * @return ChapterService
      */
     public function getChapterService()
     {
         return $this->chapterService;
+    }
+
+    /**
+     * [Setter]
+     *
+     * @param UserService $userService
+     * @return Chapter
+     */
+    public function setUserService($userService)
+    {
+        $this->userService = $userService;
+        return $this;
+    }
+
+    /**
+     * [Getter]
+     *
+     * @return UserService
+     */
+    public function getUserService()
+    {
+        return $this->userService;
     }
 
     /**

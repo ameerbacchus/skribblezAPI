@@ -38,29 +38,29 @@ class Chapter extends Base
     public $title;
 
     /**
-     * @todo
-     *
      * Parent chapter/starter
      * @var Chapter
+     *
+     * @ManyToOne(targetEntity="App\Entity\Chapter")
+     * @JoinColumn(name="parent_id", referencedColumnName="_id")
      */
     public $parent;
 
     /**
-     * @todo
-     *
      * Previous chapter
      * @var Chapter
+     *
+     * @ManyToOne(targetEntity="App\Entity\Chapter")
+     * @JoinColumn(name="prev_id", referencedColumnName="_id")
      */
     public $prev;
 
     /**
-     * @todo
-     *
      * Author
      * @var User
      *
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="author_id", referencedColumnName="_guid")
+     * @ManyToOne(targetEntity="App\Entity\User")
+     * @JoinColumn(name="author_id", referencedColumnName="_id")
      */
     public $author;
 
