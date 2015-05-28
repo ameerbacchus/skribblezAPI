@@ -42,6 +42,54 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     }
 
     
+    public function setType($type)
+    {
+        $this->__load();
+        return parent::setType($type);
+    }
+
+    public function getType()
+    {
+        $this->__load();
+        return parent::getType();
+    }
+
+    public function setUid($uid)
+    {
+        $this->__load();
+        return parent::setUid($uid);
+    }
+
+    public function getUid()
+    {
+        $this->__load();
+        return parent::getUid();
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->__load();
+        return parent::setFirstName($firstName);
+    }
+
+    public function getFirstName()
+    {
+        $this->__load();
+        return parent::getFirstName();
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->__load();
+        return parent::setLastName($lastName);
+    }
+
+    public function getLastName()
+    {
+        $this->__load();
+        return parent::getLastName();
+    }
+
     public function setUpdatedValue()
     {
         $this->__load();

@@ -23,6 +23,19 @@ class Rating extends Base
     }
 
     /**
+     * Gets the average rating for a chapter
+     *
+     * @param ChapterEntity $chapter
+     * @return number
+     */
+    public function getRatingData(ChapterEntity $chapter)
+    {
+        $repository = $this->getRepo();
+        $data = $repository->findRatingData($chapter->getGuid());
+        return $data;
+    }
+
+    /**
      * Creates a new rating and saves it to the database
      *
      * @param ChapterEntity $chapter

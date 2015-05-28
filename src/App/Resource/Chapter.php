@@ -55,6 +55,8 @@ class Chapter extends Resource
     /**
      * Get Chapter
      *
+     * @todo -- get logged in user
+     *
      * @param string $guid
      */
     public function getChapter($guid)
@@ -80,11 +82,14 @@ class Chapter extends Resource
             $userRating = $this->getRatingService()->getUserRating($chapter, $user);
         }
 
+        $ratingData = $this->getRatingService()->getRatingData($chapter);
+
         $response = [
             'chapter' => $chapter,
             'next' => $nextChapters,
             'comments' => $comments,
-            'userRating' => $userRating
+            'userRating' => $userRating,
+            'rating' => $ratingData
         ];
 
         self::response(self::STATUS_OK, $response);
