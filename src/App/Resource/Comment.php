@@ -53,7 +53,7 @@ class Comment extends Resource
 
         $newComment = $this->getCommentService()->createComment($chapter, $user, $body);
 
-        self::response(self::STATUS_OK, ['comment' => $newComment]);
+        self::response(self::STATUS_CREATED, ['comment' => $newComment]);
     }
 
     /**

@@ -107,7 +107,7 @@ class Chapter extends Resource
 
         $newStarter = $this->getChapterService()->createChapter($author, $body, 1, $title);
 
-        self::response(self::STATUS_OK, ['starter' => $newStarter]);
+        self::response(self::STATUS_CREATED, ['starter' => $newStarter]);
     }
 
     /**
@@ -131,7 +131,7 @@ class Chapter extends Resource
 
         // @todo -- create path entry (table pending)
 
-        self::response(self::STATUS_OK, ['chapter' => $newChapter]);
+        self::response(self::STATUS_CREATED, ['chapter' => $newChapter]);
     }
 
     /**
@@ -154,62 +154,6 @@ class Chapter extends Resource
 
         self::response(self::STATUS_OK, ['chapter' => $chapter]);
     }
-
-    /**
-     * Create user
-     */
-//     public function post()
-//     {
-//         $email = $this->getSlim()->request()->params('email');
-//         $password = $this->getSlim()->request()->params('password');
-
-//         if (empty($email) || empty($password) || $email === null || $password === null) {
-//             self::response(self::STATUS_BAD_REQUEST);
-//             return;
-//         }
-
-//         $user = $this->getUserService()->createUser($email, $password);
-
-//         self::response(self::STATUS_CREATED, array('user', $user));
-//     }
-
-    /**
-     * Update user
-     */
-//     public function put($id)
-//     {
-//         $email = $this->getSlim()->request()->params('email');
-//         $password = $this->getSlim()->request()->params('password');
-
-//         if (empty($email) && empty($password) || $email === null && $password === null) {
-//             self::response(self::STATUS_BAD_REQUEST);
-//             return;
-//         }
-
-//         $user = $this->getUserService()->updateUser($id, $email, $password);
-
-//         if ($user === null) {
-//             self::response(self::STATUS_NOT_IMPLEMENTED);
-//             return;
-//         }
-
-//         self::response(self::STATUS_NO_CONTENT);
-//     }
-
-    /**
-     * @param $id
-     */
-//     public function delete($id)
-//     {
-//         $status = $this->getUserService()->deleteUser($id);
-
-//         if ($status === false) {
-//             self::response(self::STATUS_NOT_FOUND);
-//             return;
-//         }
-
-//         self::response(self::STATUS_OK);
-//     }
 
     /**
      * Show options in header
