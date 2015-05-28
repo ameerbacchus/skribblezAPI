@@ -83,6 +83,36 @@ class Chapter extends Service
     }
 
     /**
+     * Updates a chapter and saves it to the database
+     *
+     * @param string $guid
+     * @param string $body
+     * @param string $title
+     * @return ChapterEntity
+     */
+    public function updateChapter($guid, $body = null, $title = null)
+    {
+        $chapter = $this->getChapter($guid);
+        if ($chapter === null) {
+            return null;
+        }
+
+        if ($body) {
+            $chapter->setBody($body);
+        }
+
+        if ($chapter->isStarter() && $title) {
+            $chapter->setTitle($title);
+        }
+
+        $em = $this->getEntityManager();
+        $em->persist($chapter);
+        $em->flush();
+
+        return $chapter;
+    }
+
+    /**
      * Get and return the Chapter Repository
      *
      * @return App\Repository\Chapter

@@ -69,6 +69,8 @@ class Chapter extends Resource
 
     /**
      * Post a new starter chapter
+     *
+     * @todo -- auth check
      */
     public function postStarter()
     {
@@ -87,6 +89,8 @@ class Chapter extends Resource
 
     /**
      * Post a new chapter
+     *
+     * @todo -- auth check
      */
     public function postChapter()
     {
@@ -97,7 +101,7 @@ class Chapter extends Resource
         $author = $this->getUserService()->getUser($authorGuid);
         $body = $request->params('body');
         $prevChapter = $this->getChapterService()->getChapter($request->params('prevChapter'));
-        $parentChapter = $prevChapter->getSequence() === 1 ? $prevChapter : $prevChapter->getParent();
+        $parentChapter = $prevChapter->isStarter() ? $prevChapter : $prevChapter->getParent();
         $sequence = $prevChapter->getSequence() + 1;
 
         $newChapter = $this->getChapterService()->createChapter($author, $body, $sequence, null, $prevChapter, $parentChapter);
@@ -105,6 +109,26 @@ class Chapter extends Resource
         // @todo -- create path entry (table pending)
 
         self::response(self::STATUS_OK, ['chapter' => $newChapter]);
+    }
+
+    /**
+     * Updates a chapter
+     *
+     * @todo -- auth check
+     *
+     * @param string $guid
+     */
+    public function patchChapter($guid)
+    {
+        $slim = $this->getSlim();
+        $request = $slim->request();
+
+        $body = $request->params('body');
+        $title = $request->params('title');
+
+        $chapter = $this->getChapterService()->updateChapter($guid, $body, $title);
+
+        self::response(self::STATUS_OK, ['chapter' => $chapter]);
     }
 
     /**

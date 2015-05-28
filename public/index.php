@@ -36,6 +36,12 @@ $app->post('/chapter', function() {
     $resource->postChapter();
 });
 
+// PATCH chapter
+$app->patch('/chapter/(:guid)(/)', function($guid) {
+    $resource = Resource::load('chapter');
+    $resource->patchChapter($guid);
+});
+
 //-- @todo - slim generated endpoints; DELETE THEM
 
 // Get

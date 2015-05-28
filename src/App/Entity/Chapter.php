@@ -195,4 +195,14 @@ class Chapter extends Base
     {
         return $this->prev;
     }
+
+    /**
+     * Returns whether or not this chapter is a starter chapter
+     *
+     * @return boolean
+     */
+    public function isStarter()
+    {
+        return $this->getSequence() === 1;
+    }
 }
