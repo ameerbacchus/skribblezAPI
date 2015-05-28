@@ -6,26 +6,31 @@ use App\Resource;
 
 $app = new Slim();
 
+// Landing page -- necessary?
 $app->get('/', function() {
     echo 'landing page';
     // @todo -- remove this or throw an error
 });
 
+// GET starters
 $app->get('/starters(/(:page)(/))', function($page = 1) {
     $resource = Resource::load('chapter');
     $resource->getStarters($page);
 });
 
+// POST starter
 $app->post('/starter', function() {
     $resource = Resource::load('chapter');
     $resource->postStarter();
 });
 
+// GET chapter
 $app->get('/chapter/(:guid)(/)', function($guid) {
     $resource = Resource::load('chapter');
     $resource->getChapter($guid);
 });
 
+// POST chapter
 $app->post('/chapter', function() {
     $resource = Resource::load('chapter');
     $resource->postChapter();

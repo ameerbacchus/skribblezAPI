@@ -18,7 +18,7 @@ abstract class Base
      * @Id
      * @GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    protected $id;
 
     /**
      * GUID
