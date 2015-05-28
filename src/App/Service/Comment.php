@@ -30,8 +30,6 @@ class Comment extends Service
     /**
      * Creates a new comment and saves it to the database
      *
-     * @todo -- test this
-     *
      * @param ChapterEntity $chapter
      * @param UserEntity $user
      * @param string $body
@@ -54,8 +52,6 @@ class Comment extends Service
 
     /**
      * Updates a comment and saves it to the database
-     *
-     * @todo -- test this
      *
      * @param CommentEntity $comment
      * @param string $body
