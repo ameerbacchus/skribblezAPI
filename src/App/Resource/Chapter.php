@@ -43,21 +43,28 @@ class Chapter extends Resource
      *
      * @param string $guid
      */
-    public function getChapterDetails($guid = null)
+    public function getChapter($guid)
     {
         if ($guid === null) {
             self::response(self::STATUS_NOT_FOUND);
             return;
         }
 
-        $chapter = $this->chapterService->getChapterDetails($guid);
+        $chapter = $this->chapterService->getChapter($guid);
 
         if ($chapter === null) {
             self::response(self::STATUS_NOT_FOUND);
             return;
         }
 
-        self::response(self::STATUS_OK, ['chapter' => $chapter]);
+        $nextChapters = $this->chapterService->getNextChapters($chapter->getId());
+
+        $response = [
+            'chapter' => $chapter,
+            'next' => $nextChapters
+        ];
+
+        self::response(self::STATUS_OK, $response);
     }
 
     /**

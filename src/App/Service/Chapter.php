@@ -8,36 +8,6 @@ use App\Entity\Chapter as ChapterEntity;
 
 class Chapter extends Service
 {
-
-    /**
-     * Gets a single chapter by GUID
-     *
-     * @param string $guid
-     * @return ChapterEntity
-     */
-    public function getChapter($guid)
-    {
-        $repository = $this->_getRepo();
-//         $chapter = $repository->findOneBy(['guid' => $guid]);
-        $chapter = $repository->findChapter($guid);
-
-        return $chapter;
-    }
-
-    /**
-     * Get a single chapter, with details, by GUID
-     *
-     * @param string $guid
-     * @return ChapterEntity
-     */
-    public function getChapterDetails($guid)
-    {
-        $repository = $this->_getRepo();
-        $chapter = $repository->findChapterDetails($guid);
-
-        return $chapter;
-    }
-
     /**
      * Get the starter chapters
      *
@@ -49,10 +19,38 @@ class Chapter extends Service
         $pageSize = 10;
         $offset = $pageSize * ($page - 1);
 
-        $repository = $this->_getRepo();
+        $repository = $this->getRepo();
         $starters = $repository->findStarters($offset, $pageSize);
 
         return $starters;
+    }
+
+    /**
+     * Gets a single chapter by GUID
+     *
+     * @param string $guid
+     * @return ChapterEntity
+     */
+    public function getChapter($guid)
+    {
+        $repository = $this->getRepo();
+        $chapter = $repository->findChapter($guid);
+
+        return $chapter;
+    }
+
+    /**
+     * Gets the following sequence of chapters, given a GUID
+     *
+     * @param integer $id
+     * @return array<ChapterEntity>
+     */
+    public function getNextChapters($id)
+    {
+        $repository = $this->getRepo();
+        $chapters = $repository->findNextChapters($id);
+
+        return $chapters;
     }
 
     /**
@@ -89,7 +87,7 @@ class Chapter extends Service
      *
      * @return App\Repository\Chapter
      */
-    private function _getRepo()
+    private function getRepo()
     {
         $repository = $this->getEntityManager()->getRepository('App\Entity\Chapter');
         return $repository;

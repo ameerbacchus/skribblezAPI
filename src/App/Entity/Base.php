@@ -18,7 +18,7 @@ abstract class Base
      * @Id
      * @GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    public $id;
 
     /**
      * GUID
@@ -70,6 +70,16 @@ abstract class Base
     {
         $now = time();
         $this->setUpdated($now);
+    }
+
+    /**
+     * [Getter]
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

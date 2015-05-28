@@ -23,7 +23,7 @@ $app->post('/starter', function() {
 
 $app->get('/chapter/(:guid)(/)', function($guid) {
     $resource = Resource::load('chapter');
-    $resource->getChapterDetails($guid);
+    $resource->getChapter($guid);
 });
 
 $app->post('/chapter', function() {

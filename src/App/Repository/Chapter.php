@@ -17,15 +17,16 @@ class Chapter extends EntityRepository
      * 		\Doctrine\ORM\Internal\Hydration\mixed,
      * 		\Doctrine\DBAL\Driver\Statement,
      * 		\Doctrine\Common\Cache\mixed
-     * 	>
+     * >
      */
     public function findChapter($guid)
     {
         $em = $this->getEntityManager();
         $q = $em->
             createQuery('
-                SELECT c, prev, par
+                SELECT c, a, prev, par
                 FROM App\Entity\Chapter c
+                LEFT JOIN c.author a
                 LEFT JOIN c.prev prev
                 LEFT JOIN c.parent par
                 WHERE c.guid = :guid
@@ -37,21 +38,18 @@ class Chapter extends EntityRepository
     }
 
     /**
-     * Queries for a Chapter, with details
+     * Queries for all of the chapters in the next sequence for the given id (integer $id, not guid)
      *
-     * @todo -- get next level of chapters
-     *
-     * @param string $guid
+     * @param integer $id
      * @return Ambigous <
+     * 		multitype:,
      * 		\Doctrine\ORM\mixed,
-     * 		NULL,
-     * 		mixed,
      * 		\Doctrine\ORM\Internal\Hydration\mixed,
      * 		\Doctrine\DBAL\Driver\Statement,
      * 		\Doctrine\Common\Cache\mixed
-     * 	>
+     * >
      */
-    public function findChapterDetails($guid)
+    public function findNextChapters($id)
     {
         $em = $this->getEntityManager();
         $q = $em->
@@ -59,12 +57,13 @@ class Chapter extends EntityRepository
                 SELECT c, a
                 FROM App\Entity\Chapter c
                 LEFT JOIN c.author a
-                WHERE c.guid = :guid
+                WHERE c.prev = :prev_id
                 AND c.deleted = 0
+                ORDER BY c.created ASC
             ')
-            ->setParameter('guid', $guid);
+            ->setParameter('prev_id', $id);
 
-        return $q->getOneOrNullResult();
+        return $q->getResult();
     }
 
     /**
@@ -79,7 +78,7 @@ class Chapter extends EntityRepository
      * 		\Doctrine\ORM\Internal\Hydration\mixed,
      * 		\Doctrine\DBAL\Driver\Statement,
      * 		\Doctrine\Common\Cache\mixed
-     * 	>
+     * >
      */
     public function findStarters($offset = 0, $limit = 10)
     {
@@ -91,6 +90,7 @@ class Chapter extends EntityRepository
                 LEFT JOIN c.author a
                 WHERE c.sequence = 1
                 AND c.deleted = 0
+                ORDER BY c.created DESC
             ')
             ->setFirstResult($offset)
             ->setMaxResults($limit);
