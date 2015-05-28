@@ -114,10 +114,25 @@ class Chapter extends \App\Entity\Chapter implements \Doctrine\ORM\Proxy\Proxy
         return parent::getPrev();
     }
 
+    public function isStarter()
+    {
+        $this->__load();
+        return parent::isStarter();
+    }
+
     public function setUpdatedValue()
     {
         $this->__load();
         return parent::setUpdatedValue();
+    }
+
+    public function getId()
+    {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
+        $this->__load();
+        return parent::getId();
     }
 
     public function setGuid($guid)

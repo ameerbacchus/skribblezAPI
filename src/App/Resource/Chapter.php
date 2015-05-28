@@ -126,7 +126,8 @@ class Chapter extends Resource
         $body = $request->params('body');
         $title = $request->params('title');
 
-        $chapter = $this->getChapterService()->updateChapter($guid, $body, $title);
+        $chapter = $this->getChapterService()->getChapter($guid);
+        $chapter = $this->getChapterService()->updateChapter($chapter, $body, $title);
 
         self::response(self::STATUS_OK, ['chapter' => $chapter]);
     }

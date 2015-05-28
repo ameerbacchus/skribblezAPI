@@ -85,14 +85,13 @@ class Chapter extends Service
     /**
      * Updates a chapter and saves it to the database
      *
-     * @param string $guid
+     * @param ChapterEntity $chapter
      * @param string $body
      * @param string $title
      * @return ChapterEntity
      */
-    public function updateChapter($guid, $body = null, $title = null)
+    public function updateChapter(ChapterEntity $chapter, $body = null, $title = null)
     {
-        $chapter = $this->getChapter($guid);
         if ($chapter === null) {
             return null;
         }

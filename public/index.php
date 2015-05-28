@@ -42,6 +42,18 @@ $app->patch('/chapter/(:guid)(/)', function($guid) {
     $resource->patchChapter($guid);
 });
 
+// POST comment
+$app->post('/chapter/(:guid)/comment(/)', function($guid) {
+    $resource = Resource::load('comment');
+    $resource->postComment($guid);
+});
+
+// PATCH comment
+$app->patch('/comment/(:guid)(/)', function($guid) {
+    $resource = Resource::load('comment');
+    $resource->patchComment($guid);
+});
+
 //-- @todo - slim generated endpoints; DELETE THEM
 
 // Get

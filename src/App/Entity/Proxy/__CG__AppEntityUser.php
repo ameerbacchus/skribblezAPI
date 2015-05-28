@@ -48,6 +48,15 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::setUpdatedValue();
     }
 
+    public function getId()
+    {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
+        $this->__load();
+        return parent::getId();
+    }
+
     public function setGuid($guid)
     {
         $this->__load();
