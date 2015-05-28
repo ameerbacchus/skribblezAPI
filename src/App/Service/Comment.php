@@ -7,9 +7,8 @@ use App\Entity\Comment as CommentEntity;
 use App\Entity\User as UserEntity;
 use App\Entity\Chapter as ChapterEntity;
 
-class Comment extends Service
+class Comment extends Base
 {
-
     /**
      * Get a comment
      *
@@ -18,13 +17,17 @@ class Comment extends Service
      */
     public function getComment($guid)
     {
-        // @todo -- make custom repo and join user?
-        return $this->getRepo()->findOneBy(['guid' => $guid]);
+        return $this->getRepo()->findComment($guid);
     }
 
+    /**
+     * Get comments for a chapter
+     *
+     * @param string $chapterGuid
+     */
     public function getComments($chapterGuid)
     {
-        // @todo
+        return $this->getRepo()->findComments($chapterGuid);
     }
 
     /**
@@ -67,7 +70,6 @@ class Comment extends Service
 
         return $comment;
     }
-
 
     /**
      * Get and return the Chapter Repository

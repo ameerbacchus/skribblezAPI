@@ -49,7 +49,7 @@ class Chapter extends EntityRepository
      * 		\Doctrine\Common\Cache\mixed
      * >
      */
-    public function findNextChapters($id)
+    public function findNextChapters($id, $offset = 0, $limit = 20)
     {
         $em = $this->getEntityManager();
         $q = $em->
@@ -61,6 +61,8 @@ class Chapter extends EntityRepository
                 AND c.deleted = 0
                 ORDER BY c.created ASC
             ')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
             ->setParameter('prev_id', $id);
 
         return $q->getResult();
@@ -84,7 +86,7 @@ class Chapter extends EntityRepository
     {
         $em = $this->getEntityManager();
         $q = $em->
-                createQuery('
+            createQuery('
                 SELECT c, a
                 FROM App\Entity\Chapter c
                 LEFT JOIN c.author a

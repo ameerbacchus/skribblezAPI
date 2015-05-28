@@ -42,6 +42,12 @@ $app->patch('/chapter/(:guid)(/)', function($guid) {
     $resource->patchChapter($guid);
 });
 
+// GET comments
+$app->get('/chapter/(:guid)/comments(/)', function($guid) {
+    $resource = Resource::load('comment');
+    $resource->getComments($guid);
+});
+
 // POST comment
 $app->post('/chapter/(:guid)/comment(/)', function($guid) {
     $resource = Resource::load('comment');
@@ -52,6 +58,11 @@ $app->post('/chapter/(:guid)/comment(/)', function($guid) {
 $app->patch('/comment/(:guid)(/)', function($guid) {
     $resource = Resource::load('comment');
     $resource->patchComment($guid);
+});
+
+$app->delete('/comment/(:guid)(/)', function($guid) {
+    $resource = Resource::load('comment');
+    $resource->deleteComment($guid);
 });
 
 //-- @todo - slim generated endpoints; DELETE THEM

@@ -8,7 +8,7 @@ use App\Entity\Chapter;
 use Doctrine\ORM\Mapping;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="App\Repository\Comment")
  * @Table(name="comments")
  */
 class Comment extends Base

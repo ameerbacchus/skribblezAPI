@@ -6,7 +6,7 @@ use App\Service;
 use App\Entity\User as UserEntity;
 use App\Entity\Chapter as ChapterEntity;
 
-class Chapter extends Service
+class Chapter extends Base
 {
     /**
      * Get the starter chapters

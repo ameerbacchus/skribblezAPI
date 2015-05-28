@@ -15,7 +15,7 @@ class Comment extends Resource
     private $commentService;
 
     /**
-     * Get user service
+     * Init
      */
     public function init()
     {
@@ -25,13 +25,14 @@ class Comment extends Resource
     }
 
     /**
-     * @todo
+     * Get comments for a chapter
      *
      * @param string $chapterGuid
      */
     public function getComments($chapterGuid)
     {
-        // @todo
+        $comments = $this->getCommentService()->getComments($chapterGuid);
+        self::response(self::STATUS_OK, ['comments' => $comments]);
     }
 
     /**
@@ -73,6 +74,23 @@ class Comment extends Resource
         $comment = $this->getCommentService()->updateComment($comment, $body);
 
         self::response(self::STATUS_OK, ['comment' => $comment]);
+    }
+
+    /**
+     * Deletes a comment
+     *
+     * @todo -- auth check
+     *
+     * @param string $guid
+     */
+    public function deleteComment($guid)
+    {
+        $comment = $this->getCommentService()->getComment($guid);
+        if ($comment) {
+            $this->getCommentService()->delete($comment);
+        }
+
+        self::response(self::STATUS_NO_CONTENT);
     }
 
     /**
