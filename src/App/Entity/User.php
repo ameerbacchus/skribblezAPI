@@ -18,7 +18,7 @@ class User extends Base
      *
      * @Column(name="type", type="integer")
      */
-    public $type;
+    protected $type;
 
     /**
      * UID - corresponds to a social network id (Facebook, Twitter, Google, etc...)
@@ -26,7 +26,7 @@ class User extends Base
      *
      * @Column(name="uid", type="string", length=50)
      */
-    public $uid;
+    protected $uid;
 
     /**
      * First Name
@@ -44,47 +44,91 @@ class User extends Base
      */
     public $lastName;
 
-//     /**
-//      * @Column(type="string", length=255)
-//      * @var string
-//      */
-//     protected $email;
+    /**
+     * [Setter]
+     *
+     * @param integer $type
+     * @return User
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
 
-//     /**
-//      * @Column(type="string", length=32)
-//      * @var string
-//      */
-//     protected $password;
+    /**
+     * [Getter]
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
-//     /**
-//      * @return string
-//      */
-//     public function getEmail()
-//     {
-//         return $this->email;
-//     }
+    /**
+     * [Setter]
+     *
+     * @param string $uid
+     * @return User
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+        return $this;
+    }
 
-//     /**
-//      * @param string $email
-//      */
-//     public function setEmail($email)
-//     {
-//         $this->email = $email;
-//     }
+    /**
+     * [Getter]
+     *
+     * @return string
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
 
-//     /**
-//      * @return string
-//      */
-//     public function getPassword()
-//     {
-//         return $this->password;
-//     }
+    /**
+     * [Setter]
+     *
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
 
-//     /**
-//      * @param string $password
-//      */
-//     public function setPassword($password)
-//     {
-//         $this->password = md5($password);
-//     }
+    /**
+     * [Getter]
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * [Setter]
+     *
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    /**
+     * [Getter]
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
 }

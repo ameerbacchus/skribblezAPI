@@ -127,7 +127,7 @@ class Comment extends Resource
      * [Setter]
      *
      * @param ChapterService $chapterService
-     * @return Chapter
+     * @return Comment
      */
     public function setChapterService($chapterService)
     {
@@ -149,7 +149,7 @@ class Comment extends Resource
      * [Setter]
      *
      * @param UserService $userService
-     * @return Chapter
+     * @return Comment
      */
     public function setUserService($userService)
     {

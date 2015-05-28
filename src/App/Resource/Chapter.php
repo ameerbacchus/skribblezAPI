@@ -6,6 +6,7 @@ use App\Resource;
 use App\Service\Chapter as ChapterService;
 use App\Service\User as UserService;
 use App\Service\Comment as CommentService;
+use App\Service\Rating as RatingService;
 
 class Chapter extends Resource
 {
@@ -25,6 +26,11 @@ class Chapter extends Resource
     private $commentService;
 
     /**
+     * @var RatingService
+     */
+    private $ratingService;
+
+    /**
      * Get user service
      */
     public function init()
@@ -32,6 +38,7 @@ class Chapter extends Resource
         $this->setChapterService(new ChapterService($this->getEntityManager()));
         $this->setUserService(new UserService($this->getEntityManager()));
         $this->setCommentService(new CommentService($this->getEntityManager()));
+        $this->setRatingService(new RatingService($this->getEntityManager()));
     }
 
     /**
@@ -67,10 +74,17 @@ class Chapter extends Resource
         $nextChapters = $this->getChapterService()->getNextChapters($guid);
         $comments = $this->getCommentService()->getComments($guid);
 
+        $userRating = null;
+        $user = $this->getUserService()->getUser('author1');	// @todo -- get logged in user
+        if ($user) {
+            $userRating = $this->getRatingService()->getUserRating($chapter, $user);
+        }
+
         $response = [
             'chapter' => $chapter,
             'next' => $nextChapters,
-            'comments' => $comments
+            'comments' => $comments,
+            'userRating' => $userRating
         ];
 
         self::response(self::STATUS_OK, $response);
@@ -269,6 +283,28 @@ class Chapter extends Resource
     public function getCommentService()
     {
         return $this->commentService;
+    }
+
+    /**
+     * [Setter]
+     *
+     * @param RatingService $ratingService
+     * @return Chapter
+     */
+    public function setRatingService($ratingService)
+    {
+        $this->ratingService = $ratingService;
+        return $this;
+    }
+
+    /**
+     * [Getter]
+     *
+     * @return RatingService
+     */
+    public function getRatingService()
+    {
+        return $this->ratingService;
     }
 
     /**
