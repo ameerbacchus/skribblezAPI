@@ -38,6 +38,12 @@ class Rating extends Resource
         $user = $this->getUserService()->getUser($request->params('user'));
         $chapter = $this->getChapterService()->getChapter($chapterGuid);
 
+        $userRating = $this->getRatingService()->getUserRating($chapter, $user);
+        if ($userRating) {
+            self::response(self::STATUS_METHOD_NOT_ALLOWED, ['error' => 'User has already rated this.']);
+            return;
+        }
+
         $newRating = $this->getRatingService()->createRating($chapter, $user, $score);
 
         self::response(self::STATUS_CREATED, ['rating' => $newRating]);
