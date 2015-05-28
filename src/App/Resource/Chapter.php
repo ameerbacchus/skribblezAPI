@@ -5,6 +5,7 @@ namespace App\Resource;
 use App\Resource;
 use App\Service\Chapter as ChapterService;
 use App\Service\User as UserService;
+use App\Service\Comment as CommentService;
 
 class Chapter extends Resource
 {
@@ -19,12 +20,18 @@ class Chapter extends Resource
     private $userService;
 
     /**
+     * @var CommentService
+     */
+    private $commentService;
+
+    /**
      * Get user service
      */
     public function init()
     {
         $this->setChapterService(new ChapterService($this->getEntityManager()));
         $this->setUserService(new UserService($this->getEntityManager()));
+        $this->setCommentService(new CommentService($this->getEntityManager()));
     }
 
     /**
@@ -34,7 +41,7 @@ class Chapter extends Resource
      */
     public function getStarters($page = 1)
     {
-        $starters = $this->chapterService->getStarters($page);
+        $starters = $this->getChapterService()->getStarters($page);
         self::response(self::STATUS_OK, ['starters' => $starters]);
     }
 
@@ -50,18 +57,20 @@ class Chapter extends Resource
             return;
         }
 
-        $chapter = $this->chapterService->getChapter($guid);
+        $chapter = $this->getChapterService()->getChapter($guid);
 
         if ($chapter === null) {
             self::response(self::STATUS_NOT_FOUND);
             return;
         }
 
-        $nextChapters = $this->chapterService->getNextChapters($chapter->getId());
+        $nextChapters = $this->getChapterService()->getNextChapters($guid);
+        $comments = $this->getCommentService()->getComments($guid);
 
         $response = [
             'chapter' => $chapter,
-            'next' => $nextChapters
+            'next' => $nextChapters,
+            'comments' => $comments
         ];
 
         self::response(self::STATUS_OK, $response);
@@ -238,6 +247,28 @@ class Chapter extends Resource
     public function getUserService()
     {
         return $this->userService;
+    }
+
+    /**
+     * [Setter]
+     *
+     * @param CommentService $commentService
+     * @return Chapter
+     */
+    public function setCommentService($commentService)
+    {
+        $this->commentService = $commentService;
+        return $this;
+    }
+
+    /**
+     * [Getter]
+     *
+     * @return CommentService
+     */
+    public function getCommentService()
+    {
+        return $this->commentService;
     }
 
     /**

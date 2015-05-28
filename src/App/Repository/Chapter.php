@@ -40,7 +40,7 @@ class Chapter extends EntityRepository
     /**
      * Queries for all of the chapters in the next sequence for the given id (integer $id, not guid)
      *
-     * @param integer $id
+     * @param string $guid
      * @return Ambigous <
      * 		multitype:,
      * 		\Doctrine\ORM\mixed,
@@ -49,21 +49,22 @@ class Chapter extends EntityRepository
      * 		\Doctrine\Common\Cache\mixed
      * >
      */
-    public function findNextChapters($id, $offset = 0, $limit = 20)
+    public function findNextChapters($guid, $offset = 0, $limit = 20)
     {
         $em = $this->getEntityManager();
         $q = $em->
             createQuery('
-                SELECT c, a
+                SELECT c, a, p
                 FROM App\Entity\Chapter c
                 LEFT JOIN c.author a
-                WHERE c.prev = :prev_id
+                LEFT JOIN c.prev p
+                WHERE p.guid = :guid
                 AND c.deleted = 0
                 ORDER BY c.created ASC
             ')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->setParameter('prev_id', $id);
+            ->setParameter('guid', $guid);
 
         return $q->getResult();
     }

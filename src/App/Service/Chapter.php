@@ -42,13 +42,13 @@ class Chapter extends Base
     /**
      * Gets the following sequence of chapters, given a GUID
      *
-     * @param integer $id
+     * @param string $guid
      * @return array<ChapterEntity>
      */
-    public function getNextChapters($id)
+    public function getNextChapters($guid)
     {
         $repository = $this->getRepo();
-        $chapters = $repository->findNextChapters($id);
+        $chapters = $repository->findNextChapters($guid);
 
         return $chapters;
     }

@@ -60,6 +60,7 @@ $app->patch('/comment/(:guid)(/)', function($guid) {
     $resource->patchComment($guid);
 });
 
+// DELETE comment
 $app->delete('/comment/(:guid)(/)', function($guid) {
     $resource = Resource::load('comment');
     $resource->deleteComment($guid);
