@@ -27,6 +27,8 @@ class Rating extends Resource
     /**
      * Post a new rating
      *
+     * @todo -- auth check
+     *
      * @param string $chapterGuid
      */
     public function postRating($chapterGuid)
@@ -47,6 +49,26 @@ class Rating extends Resource
         $newRating = $this->getRatingService()->createRating($chapter, $user, $score);
 
         self::response(self::STATUS_CREATED, ['rating' => $newRating]);
+    }
+
+    /**
+     * Update a rating
+     *
+     * @todo -- auth check
+     *
+     * @param string $chapterGuid
+     */
+    public function patchRating($guid)
+    {
+        $slim = $this->getSlim();
+        $request = $slim->request();
+
+        $score = $request->params('score');
+
+        $rating = $this->getRatingService()->getRating($guid);
+        $rating = $this->getRatingService()->updateRating($rating, $score);
+
+        self::response(self::STATUS_OK, ['rating' => $rating]);
     }
 
     /**

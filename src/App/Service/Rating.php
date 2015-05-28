@@ -10,6 +10,19 @@ use App\Entity\Chapter as ChapterEntity;
 class Rating extends Base
 {
     /**
+     * Get a single rating
+     *
+     * @param string $guid
+     * @return RatingEntity
+     */
+    public function getRating($guid)
+    {
+        $repository = $this->getRepo();
+        $rating = $repository->findRating($guid);
+        return $rating;
+    }
+
+    /**
      * Gets a user's rating for a chapter
      *
      * @param string $chapterGuid

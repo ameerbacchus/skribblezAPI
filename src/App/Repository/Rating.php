@@ -8,6 +8,34 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class Rating extends EntityRepository
 {
     /**
+     * Queries for a single rating
+     *
+     * @param string $guid
+     * @return Ambigous <
+     * 		\Doctrine\ORM\mixed,
+     * 		NULL,
+     * 		mixed,
+     * 		\Doctrine\ORM\Internal\Hydration\mixed,
+     * 		\Doctrine\DBAL\Driver\Statement,
+     * 		\Doctrine\Common\Cache\mixed
+     * >
+     */
+    public function findRating($guid)
+    {
+        $em = $this->getEntityManager();
+        $q = $em->
+            createQuery('
+                SELECT r
+                FROM App\Entity\Rating r
+                WHERE r.guid = :guid
+                AND r.deleted = 0
+            ')
+            ->setParameter('guid', $guid);
+
+        return $q->getOneOrNullResult();
+    }
+
+    /**
      * Queries for Ratings for a Chapter
      *
      * @param string $chapterGuid

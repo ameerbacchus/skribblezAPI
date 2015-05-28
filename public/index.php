@@ -72,10 +72,16 @@ $app->delete('/comment/(:guid)(/)', function($guid) {
 
 
 //-- Ratings
-//
+// POST rating
 $app->post('/chapter/(:guid)/rating(/)', function($guid) {
     $resource = Resource::load('rating');
     $resource->postRating($guid);
+});
+
+// PATCH  rating
+$app->patch('/rating/(:guid)(/)', function($guid) {
+    $resource = Resource::load('rating');
+    $resource->patchRating($guid);
 });
 
 //-- @todo - slim generated endpoints; DELETE THEM
