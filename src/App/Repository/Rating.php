@@ -129,7 +129,7 @@ class Rating extends EntityRepository
             ->createNativeQuery($sql, $rsm)
             ->setParameter('guid', $chapterGuid);
 
-        return $q->getResult();
+        return $q->getOneOrNullResult();
     }
 }
 
