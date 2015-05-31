@@ -187,6 +187,22 @@ class Chapter extends Resource
     }
 
     /**
+     * Gets all of the chapters that led up to (and including) the requested chapter
+     *
+     * @param string $guid
+     */
+    public function getChapterPath($guid)
+    {
+        $chapterPath = $this->getChapterPathService()->getChapterPath($guid);
+        $guids = $chapterPath->getPathGuids();
+        $guids[] = $guid;
+
+        $chapters = $this->getChapterService()->getChapters($guids);
+
+        self::response(self::STATUS_OK, ['path' => $chapters]);
+    }
+
+    /**
      * Show options in header
      */
     public function options()
