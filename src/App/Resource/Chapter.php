@@ -161,6 +161,23 @@ class Chapter extends Resource
     }
 
     /**
+     * Deletes a chapter
+     *
+     * @todo -- auth check
+     *
+     * @param string $guid
+     */
+    public function deleteChapter($guid)
+    {
+        $chapter = $this->getChapterService()->getChapter($guid);
+        if ($chapter) {
+            $this->getChapterService()->delete($chapter);
+        }
+
+        self::response(self::STATUS_NO_CONTENT);
+    }
+
+    /**
      * Show options in header
      */
     public function options()

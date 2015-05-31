@@ -44,6 +44,11 @@ $app->patch('/chapter/(:guid)(/)', function($guid) {
     $resource->patchChapter($guid);
 });
 
+$app->delete('/chapter/(:guid)(/)', function($guid) {
+    $resource = Resource::load('chapter');
+    $resource->deleteChapter($guid);
+});
+
 
 //-- Comments
 // GET comments
