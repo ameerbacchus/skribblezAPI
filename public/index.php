@@ -8,10 +8,13 @@ $app = new Slim();
 
 // Landing page -- necessary?
 $app->get('/', function() {
-    echo 'landing page';
-    // @todo -- remove this or throw an error
+    // @todo -- remove this
+    echo '
+        <div style="text-align: center;">
+            <img src="http://www.troll.me/images2/grammar-correction-guy/excuse-me-but-gtfo.jpg" />
+        </div>
+            ';
 });
-
 
 //-- Chapters/Starters
 // GET starters
@@ -21,7 +24,7 @@ $app->get('/starters(/(:page)(/))', function($page = 1) {
 });
 
 // POST starter
-$app->post('/starter', function() {
+$app->post('/starter(/)', function() {
     $resource = Resource::load('chapter');
     $resource->postStarter();
 });
@@ -33,9 +36,9 @@ $app->get('/chapter/(:guid)(/)', function($guid) {
 });
 
 // POST chapter
-$app->post('/chapter', function() {
+$app->post('/chapter/(:guid)(/)', function($guid) {
     $resource = Resource::load('chapter');
-    $resource->postChapter();
+    $resource->postChapter($guid);
 });
 
 // PATCH chapter
@@ -88,47 +91,6 @@ $app->patch('/rating/(:guid)(/)', function($guid) {
     $resource = Resource::load('rating');
     $resource->patchRating($guid);
 });
-
-//-- @todo - slim generated endpoints; DELETE THEM
-// // Get
-// $app->get('/:resource(/(:id)(/))', function($resource, $id = null) {
-//     $resource = \App\Resource::load($resource);
-//     if ($resource === null) {
-//         \App\Resource::response(\App\Resource::STATUS_NOT_FOUND);
-//     } else {
-//         $resource->get($id);
-//     }
-// });
-
-// // Post
-// $app->post('/:resource(/)', function($resource) {
-//     $resource = \App\Resource::load($resource);
-//     if ($resource === null) {
-//         \App\Resource::response(\App\Resource::STATUS_NOT_FOUND);
-//     } else {
-//         $resource->post();
-//     }
-// });
-
-// // Put
-// $app->put('/:resource/:id(/)', function($resource, $id = null) {
-//     $resource = \App\Resource::load($resource);
-//     if ($resource === null) {
-//         \App\Resource::response(\App\Resource::STATUS_NOT_FOUND);
-//     } else {
-//         $resource->put($id);
-//     }
-// });
-
-// // Delete
-// $app->delete('/:resource/:id(/)', function($resource, $id = null) {
-//     $resource = \App\Resource::load($resource);
-//     if ($resource === null) {
-//         \App\Resource::response(\App\Resource::STATUS_NOT_FOUND);
-//     } else {
-//         $resource->delete($id);
-//     }
-// });
 
 // Options
 $app->options('/:resource(/)', function($resource, $id = null) {

@@ -105,8 +105,9 @@ class Chapter extends Resource
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $authorGuid = $request->params('author');
+        $authorGuid = $request->params('author');	// @todo -- get logged in user
         $author = $this->getUserService()->getUser($authorGuid);
+
         $title = $request->params('title');
         $body = $request->params('body');
 
@@ -120,15 +121,16 @@ class Chapter extends Resource
      *
      * @todo -- auth check
      */
-    public function postChapter()
+    public function postChapter($prevGuid)
     {
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $authorGuid = $request->params('author');
+        $authorGuid = $request->params('author');	// @todo -- get logged in user
         $author = $this->getUserService()->getUser($authorGuid);
+
         $body = $request->params('body');
-        $prevChapter = $this->getChapterService()->getChapter($request->params('prevChapter'));
+        $prevChapter = $this->getChapterService()->getChapter($prevGuid);
         $parentChapter = $prevChapter->isStarter() ? $prevChapter : $prevChapter->getParent();
         $sequence = $prevChapter->getSequence() + 1;
 
