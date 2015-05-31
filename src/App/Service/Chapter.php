@@ -40,6 +40,20 @@ class Chapter extends Base
     }
 
     /**
+     * Gets chapters by GUIDs
+     *
+     * @param array<string> $guids
+     * @return array<ChapterEntity>
+     */
+    public function getChapters($guids)
+    {
+        $repository = $this->getRepo();
+        $chapters = $repository->findChapters($guids);
+
+        return $chapters;
+    }
+
+    /**
      * Gets the following sequence of chapters, given a GUID
      *
      * @param string $guid

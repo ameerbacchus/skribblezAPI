@@ -4,6 +4,7 @@ namespace App\Resource;
 
 use App\Resource;
 use App\Service\Chapter as ChapterService;
+use App\Service\ChapterPath as ChapterPathService;
 use App\Service\User as UserService;
 use App\Service\Comment as CommentService;
 use App\Service\Rating as RatingService;
@@ -14,6 +15,11 @@ class Chapter extends Resource
      * @var ChapterService
      */
     private $chapterService;
+
+    /**
+     * @var ChapterPathService
+     */
+    private $chapterPathService;
 
     /**
      * @var UserService
@@ -36,6 +42,7 @@ class Chapter extends Resource
     public function init()
     {
         $this->setChapterService(new ChapterService($this->getEntityManager()));
+        $this->setChapterPathService(new ChapterPathService($this->getEntityManager()));
         $this->setUserService(new UserService($this->getEntityManager()));
         $this->setCommentService(new CommentService($this->getEntityManager()));
         $this->setRatingService(new RatingService($this->getEntityManager()));
@@ -136,7 +143,7 @@ class Chapter extends Resource
 
         $newChapter = $this->getChapterService()->createChapter($author, $body, $sequence, null, $prevChapter, $parentChapter);
 
-        // @todo -- create path entry (table pending)
+        $newChapterPath = $this->getChapterPathService()->createChapterPath($newChapter);
 
         self::response(self::STATUS_CREATED, ['chapter' => $newChapter]);
     }
@@ -180,6 +187,22 @@ class Chapter extends Resource
     }
 
     /**
+     * Gets all of the chapters that led up to (and including) the requested chapter
+     *
+     * @param string $guid
+     */
+    public function getChapterPath($guid)
+    {
+        $chapterPath = $this->getChapterPathService()->getChapterPath($guid);
+        $guids = $chapterPath->getPathGuids();
+        $guids[] = $guid;
+
+        $chapters = $this->getChapterService()->getChapters($guids);
+
+        self::response(self::STATUS_OK, ['path' => $chapters]);
+    }
+
+    /**
      * Show options in header
      */
     public function options()
@@ -207,6 +230,28 @@ class Chapter extends Resource
     public function getChapterService()
     {
         return $this->chapterService;
+    }
+
+    /**
+     * [Setter]
+     *
+     * @param ChapterPathService $chapterPathService
+     * @return Chapter
+     */
+    public function setChapterPathService($chapterPathService)
+    {
+        $this->chapterPathService = $chapterPathService;
+        return $this;
+    }
+
+    /**
+     * [Getter]
+     *
+     * @return ChapterPath
+     */
+    public function getChapterPathService()
+    {
+        return $this->chapterPathService;
     }
 
     /**

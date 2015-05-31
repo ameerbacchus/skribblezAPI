@@ -38,6 +38,35 @@ class Chapter extends EntityRepository
     }
 
     /**
+     * Queries for Chapters by an array of GUIDs
+     *
+     * @param array<string> $guids
+     * @return Ambigous <
+     * 		multitype:,
+     * 		\Doctrine\ORM\mixed,
+     * 		\Doctrine\ORM\Internal\Hydration\mixed,
+     * 		\Doctrine\DBAL\Driver\Statement,
+     * 		\Doctrine\Common\Cache\mixed
+     * >
+     */
+    public function findChapters($guids)
+    {
+        $em = $this->getEntityManager();
+        $q = $em->
+            createQuery('
+                SELECT c, a
+                FROM App\Entity\Chapter c
+                LEFT JOIN c.author a
+                WHERE c.guid IN (:guids)
+                AND c.deleted = 0
+                ORDER BY c.sequence ASC
+            ')
+            ->setParameter('guids', $guids);
+
+        return $q->getResult();
+    }
+
+    /**
      * Queries for all of the chapters in the next sequence for the given id (integer $id, not guid)
      *
      * @param string $guid

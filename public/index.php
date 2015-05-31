@@ -47,11 +47,17 @@ $app->patch('/chapter/(:guid)(/)', function($guid) {
     $resource->patchChapter($guid);
 });
 
+// DELETE chapter
 $app->delete('/chapter/(:guid)(/)', function($guid) {
     $resource = Resource::load('chapter');
     $resource->deleteChapter($guid);
 });
 
+// GET chapter path
+$app->get('/chapter/(:guid)/path(/)', function($guid) {
+    $resource = Resource::load('chapter');
+    $resource->getChapterPath($guid);
+});
 
 //-- Comments
 // GET comments
