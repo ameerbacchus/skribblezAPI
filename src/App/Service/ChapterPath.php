@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Service;
 
 use App\Service;
@@ -9,6 +8,7 @@ use App\Entity\ChapterPath as ChapterPathEntity;
 
 class ChapterPath extends Base
 {
+
     /**
      * Get a ChapterPath for a Chapter by GUID
      *
@@ -41,8 +41,7 @@ class ChapterPath extends Base
         $pathGuids[] = $prevChapter->getGuid();
 
         $newChapterPath = new ChapterPathEntity();
-        $newChapterPath
-            ->setGuid($chapter->getGuid())
+        $newChapterPath->setGuid($chapter->getGuid())
             ->setPathGuids($pathGuids);
 
         $em = $this->getEntityManager();

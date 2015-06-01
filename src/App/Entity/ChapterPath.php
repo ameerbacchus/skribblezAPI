@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Entity\Base;
@@ -9,17 +8,18 @@ use Doctrine\ORM\Mapping;
 /**
  * @Entity(repositoryClass="App\Repository\ChapterPath")
  * @Table(name="chapter_path")
- *
  */
 class ChapterPath extends Base
 {
+
     const PATH_DELIMITER = '|';
 
     /**
      * Path string: a set of comma-separated Chapter GUIDs
-     * @var string
      *
      * @Column(name="path", type="string")
+     *
+     * @var string
      */
     public $path;
 

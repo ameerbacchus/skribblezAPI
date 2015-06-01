@@ -1,36 +1,34 @@
 <?php
-
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 class Comment extends EntityRepository
 {
+
     /**
      * Queries for a Comment
      *
      * @param string $guid
      * @return Ambigous <
-     * 		\Doctrine\ORM\mixed,
-     * 		NULL,
-     * 		mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         \Doctrine\ORM\mixed,
+     *         NULL,
+     *         mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findComment($guid)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT c, u
                 FROM App\Entity\Comment c
                 LEFT JOIN c.user u
                 WHERE c.guid = :guid
                 AND c.deleted = 0
-            ')
-            ->setParameter('guid', $guid);
+            ')->setParameter('guid', $guid);
 
         return $q->getOneOrNullResult();
     }
@@ -40,18 +38,17 @@ class Comment extends EntityRepository
      *
      * @param string $chapterGuid
      * @return Ambigous <
-     * 		multitype:,
-     * 		\Doctrine\ORM\mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         multitype:,
+     *         \Doctrine\ORM\mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findComments($chapterGuid, $offset = 0, $limit = 40)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT c, ch, u
                 FROM App\Entity\Comment c
                 LEFT JOIN c.user u

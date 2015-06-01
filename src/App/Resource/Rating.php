@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Resource;
 
 use App\Resource;
@@ -9,7 +8,9 @@ use App\Service\User as UserService;
 
 class Rating extends Resource
 {
+
     /**
+     *
      * @var \App\Service\Rating
      */
     private $ratingService;
@@ -42,13 +43,17 @@ class Rating extends Resource
 
         $userRating = $this->getRatingService()->getUserRating($chapter, $user);
         if ($userRating) {
-            self::response(self::STATUS_METHOD_NOT_ALLOWED, ['error' => 'User has already rated this.']);
+            self::response(self::STATUS_METHOD_NOT_ALLOWED, [
+                'error' => 'User has already rated this.'
+            ]);
             return;
         }
 
         $newRating = $this->getRatingService()->createRating($chapter, $user, $score);
 
-        self::response(self::STATUS_CREATED, ['rating' => $newRating]);
+        self::response(self::STATUS_CREATED, [
+            'rating' => $newRating
+        ]);
     }
 
     /**
@@ -68,7 +73,9 @@ class Rating extends Resource
         $rating = $this->getRatingService()->getRating($guid);
         $rating = $this->getRatingService()->updateRating($rating, $score);
 
-        self::response(self::STATUS_OK, ['rating' => $rating]);
+        self::response(self::STATUS_OK, [
+            'rating' => $rating
+        ]);
     }
 
     /**
@@ -76,7 +83,13 @@ class Rating extends Resource
      */
     public function options()
     {
-        self::response(self::STATUS_OK, array(), array('GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'));
+        self::response(self::STATUS_OK, array(), array(
+            'GET',
+            'POST',
+            'PUT',
+            'DELETE',
+            'OPTIONS'
+        ));
     }
 
     /**
@@ -146,6 +159,7 @@ class Rating extends Resource
     }
 
     /**
+     *
      * @return array
      */
     public function getOptions()

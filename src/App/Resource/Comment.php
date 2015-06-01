@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Resource;
 
 use App\Resource;
@@ -9,7 +8,9 @@ use App\Service\User as UserService;
 
 class Comment extends Resource
 {
+
     /**
+     *
      * @var \App\Service\Comment
      */
     private $commentService;
@@ -32,7 +33,9 @@ class Comment extends Resource
     public function getComments($chapterGuid)
     {
         $comments = $this->getCommentService()->getComments($chapterGuid);
-        self::response(self::STATUS_OK, ['comments' => $comments]);
+        self::response(self::STATUS_OK, [
+            'comments' => $comments
+        ]);
     }
 
     /**
@@ -53,7 +56,9 @@ class Comment extends Resource
 
         $newComment = $this->getCommentService()->createComment($chapter, $user, $body);
 
-        self::response(self::STATUS_CREATED, ['comment' => $newComment]);
+        self::response(self::STATUS_CREATED, [
+            'comment' => $newComment
+        ]);
     }
 
     /**
@@ -73,7 +78,9 @@ class Comment extends Resource
         $comment = $this->getCommentService()->getComment($guid);
         $comment = $this->getCommentService()->updateComment($comment, $body);
 
-        self::response(self::STATUS_OK, ['comment' => $comment]);
+        self::response(self::STATUS_OK, [
+            'comment' => $comment
+        ]);
     }
 
     /**
@@ -98,7 +105,13 @@ class Comment extends Resource
      */
     public function options()
     {
-        self::response(self::STATUS_OK, array(), array('GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'));
+        self::response(self::STATUS_OK, array(), array(
+            'GET',
+            'POST',
+            'PUT',
+            'DELETE',
+            'OPTIONS'
+        ));
     }
 
     /**
@@ -168,6 +181,7 @@ class Comment extends Resource
     }
 
     /**
+     *
      * @return array
      */
     public function getOptions()

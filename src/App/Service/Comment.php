@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Service;
 
 use App\Service;
@@ -9,6 +8,7 @@ use App\Entity\Chapter as ChapterEntity;
 
 class Comment extends Base
 {
+
     /**
      * Get a comment
      *
@@ -41,8 +41,7 @@ class Comment extends Base
     public function createComment(ChapterEntity $chapter, UserEntity $user, $body)
     {
         $newComment = new CommentEntity();
-        $newComment
-            ->setChapter($chapter)
+        $newComment->setChapter($chapter)
             ->setUser($user)
             ->setBody($body);
 

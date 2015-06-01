@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -10,45 +9,51 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class Base
 {
+
     /**
      * Primary key
-     * @var integer
      *
      * @Column(name="_id", type="integer")
      * @Id
      * @GeneratedValue(strategy="AUTO")
+     *
+     * @var integer
      */
     protected $id;
 
     /**
      * GUID
-     * @var string
      *
      * @Column(name="_guid", type="string", length=45, unique=true)
+     *
+     * @var string
      */
     public $guid;
 
     /**
      * Create date (UTC time)
-     * @var integer
      *
      * @Column(name="_created", type="integer")
+     *
+     * @var integer
      */
     public $created;
 
     /**
      * Update date (UTC time)
-     * @var integer
      *
      * @Column(name="_updated", type="integer")
+     *
+     * @var integer
      */
     public $updated;
 
     /**
      * Deleted flag
-     * @var bool
      *
      * @Column(name="_deleted", type="boolean")
+     *
+     * @var bool
      */
     protected $deleted = false;
 

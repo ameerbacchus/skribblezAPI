@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Resource;
 
 use App\Resource;
@@ -11,27 +10,33 @@ use App\Service\Rating as RatingService;
 
 class Chapter extends Resource
 {
+
     /**
+     *
      * @var ChapterService
      */
     private $chapterService;
 
     /**
+     *
      * @var ChapterPathService
      */
     private $chapterPathService;
 
     /**
+     *
      * @var UserService
      */
     private $userService;
 
     /**
+     *
      * @var CommentService
      */
     private $commentService;
 
     /**
+     *
      * @var RatingService
      */
     private $ratingService;
@@ -56,7 +61,9 @@ class Chapter extends Resource
     public function getStarters($page = 1)
     {
         $starters = $this->getChapterService()->getStarters($page);
-        self::response(self::STATUS_OK, ['starters' => $starters]);
+        self::response(self::STATUS_OK, [
+            'starters' => $starters
+        ]);
     }
 
     /**
@@ -84,7 +91,7 @@ class Chapter extends Resource
         $comments = $this->getCommentService()->getComments($guid);
 
         $userRating = null;
-        $user = $this->getUserService()->getUser('author1');	// @todo -- get logged in user
+        $user = $this->getUserService()->getUser('author1'); // @todo -- get logged in user
         if ($user) {
             $userRating = $this->getRatingService()->getUserRating($chapter, $user);
         }
@@ -112,7 +119,7 @@ class Chapter extends Resource
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $authorGuid = $request->params('author');	// @todo -- get logged in user
+        $authorGuid = $request->params('author'); // @todo -- get logged in user
         $author = $this->getUserService()->getUser($authorGuid);
 
         $title = $request->params('title');
@@ -120,7 +127,9 @@ class Chapter extends Resource
 
         $newStarter = $this->getChapterService()->createChapter($author, $body, 1, $title);
 
-        self::response(self::STATUS_CREATED, ['starter' => $newStarter]);
+        self::response(self::STATUS_CREATED, [
+            'starter' => $newStarter
+        ]);
     }
 
     /**
@@ -133,7 +142,7 @@ class Chapter extends Resource
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $authorGuid = $request->params('author');	// @todo -- get logged in user
+        $authorGuid = $request->params('author'); // @todo -- get logged in user
         $author = $this->getUserService()->getUser($authorGuid);
 
         $body = $request->params('body');
@@ -145,7 +154,9 @@ class Chapter extends Resource
 
         $newChapterPath = $this->getChapterPathService()->createChapterPath($newChapter);
 
-        self::response(self::STATUS_CREATED, ['chapter' => $newChapter]);
+        self::response(self::STATUS_CREATED, [
+            'chapter' => $newChapter
+        ]);
     }
 
     /**
@@ -166,7 +177,9 @@ class Chapter extends Resource
         $chapter = $this->getChapterService()->getChapter($guid);
         $chapter = $this->getChapterService()->updateChapter($chapter, $body, $title);
 
-        self::response(self::STATUS_OK, ['chapter' => $chapter]);
+        self::response(self::STATUS_OK, [
+            'chapter' => $chapter
+        ]);
     }
 
     /**
@@ -199,7 +212,9 @@ class Chapter extends Resource
 
         $chapters = $this->getChapterService()->getChapters($guids);
 
-        self::response(self::STATUS_OK, ['path' => $chapters]);
+        self::response(self::STATUS_OK, [
+            'path' => $chapters
+        ]);
     }
 
     /**
@@ -207,7 +222,13 @@ class Chapter extends Resource
      */
     public function options()
     {
-        self::response(self::STATUS_OK, array(), array('GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'));
+        self::response(self::STATUS_OK, array(), array(
+            'GET',
+            'POST',
+            'PUT',
+            'DELETE',
+            'OPTIONS'
+        ));
     }
 
     /**
@@ -321,6 +342,7 @@ class Chapter extends Resource
     }
 
     /**
+     *
      * @return array
      */
     public function getOptions()

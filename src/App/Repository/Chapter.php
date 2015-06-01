@@ -1,29 +1,28 @@
 <?php
-
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 class Chapter extends EntityRepository
 {
+
     /**
      * Queries for a Chapter
      *
      * @param string $guid
      * @return Ambigous <
-     * 		\Doctrine\ORM\mixed,
-     * 		NULL,
-     * 		mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         \Doctrine\ORM\mixed,
+     *         NULL,
+     *         mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findChapter($guid)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT c, a, prev, par
                 FROM App\Entity\Chapter c
                 LEFT JOIN c.author a
@@ -31,8 +30,7 @@ class Chapter extends EntityRepository
                 LEFT JOIN c.parent par
                 WHERE c.guid = :guid
                 AND c.deleted = 0
-            ')
-            ->setParameter('guid', $guid);
+            ')->setParameter('guid', $guid);
 
         return $q->getOneOrNullResult();
     }
@@ -42,26 +40,24 @@ class Chapter extends EntityRepository
      *
      * @param array<string> $guids
      * @return Ambigous <
-     * 		multitype:,
-     * 		\Doctrine\ORM\mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         multitype:,
+     *         \Doctrine\ORM\mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findChapters($guids)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT c, a
                 FROM App\Entity\Chapter c
                 LEFT JOIN c.author a
                 WHERE c.guid IN (:guids)
                 AND c.deleted = 0
                 ORDER BY c.sequence ASC
-            ')
-            ->setParameter('guids', $guids);
+            ')->setParameter('guids', $guids);
 
         return $q->getResult();
     }
@@ -71,18 +67,17 @@ class Chapter extends EntityRepository
      *
      * @param string $guid
      * @return Ambigous <
-     * 		multitype:,
-     * 		\Doctrine\ORM\mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         multitype:,
+     *         \Doctrine\ORM\mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findNextChapters($guid, $offset = 0, $limit = 20)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT c, a, p
                 FROM App\Entity\Chapter c
                 LEFT JOIN c.author a
@@ -105,18 +100,17 @@ class Chapter extends EntityRepository
      * @param int $limit
      *
      * @return Ambigous <
-     * 		multitype:,
-     * 		\Doctrine\ORM\mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         multitype:,
+     *         \Doctrine\ORM\mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findStarters($offset = 0, $limit = 10)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT c, a
                 FROM App\Entity\Chapter c
                 LEFT JOIN c.author a

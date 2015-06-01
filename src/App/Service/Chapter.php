@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Service;
 
 use App\Service;
@@ -8,6 +7,7 @@ use App\Entity\Chapter as ChapterEntity;
 
 class Chapter extends Base
 {
+
     /**
      * Get the starter chapters
      *
@@ -81,8 +81,7 @@ class Chapter extends Base
     public function createChapter(UserEntity $author, $body, $sequence = 1, $title = null, ChapterEntity $prevChapter = null, ChapterEntity $parentChapter = null)
     {
         $newChapter = new ChapterEntity();
-        $newChapter
-            ->setAuthor($author)
+        $newChapter->setAuthor($author)
             ->setBody($body)
             ->setSequence($sequence)
             ->setTitle($title)

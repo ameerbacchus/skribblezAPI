@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Entity\Base;
@@ -9,58 +8,64 @@ use Doctrine\ORM\Mapping;
 /**
  * @Entity(repositoryClass="App\Repository\Chapter")
  * @Table(name="chapters")
- *
  */
 class Chapter extends Base
 {
+
     /**
      * Chapter sequence
-     * @var integer
      *
      * @Column(name="sequence", type="integer")
+     *
+     * @var integer
      */
     public $sequence;
 
     /**
      * Chapter body
-     * @var string
      *
      * @Column(name="body", type="string")
+     *
+     * @var string
      */
     public $body;
 
     /**
      * Chapter title
-     * @var string
      *
      * @Column(name="title", type="string", length=100, nullable=true)
+     *
+     * @var string
      */
     public $title;
 
     /**
      * Parent chapter/starter
-     * @var Chapter
      *
      * @ManyToOne(targetEntity="App\Entity\Chapter")
      * @JoinColumn(name="parent_id", referencedColumnName="_id")
+     *
+     * @var Chapter
      */
     public $parent;
 
     /**
      * Previous chapter
-     * @var Chapter
      *
      * @ManyToOne(targetEntity="App\Entity\Chapter")
      * @JoinColumn(name="prev_id", referencedColumnName="_id")
+     *
+     * @var Chapter
      */
     public $prev;
 
     /**
      * Author
-     * @var User
      *
      * @ManyToOne(targetEntity="App\Entity\User")
      * @JoinColumn(name="author_id", referencedColumnName="_id")
+     *
+     * @var User
      */
     public $author;
 
