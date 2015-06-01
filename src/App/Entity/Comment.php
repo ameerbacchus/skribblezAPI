@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Entity\Base;
@@ -13,29 +12,33 @@ use Doctrine\ORM\Mapping;
  */
 class Comment extends Base
 {
+
     /**
      * Comment body
-     * @var string
      *
      * @Column(name="body", type="string")
+     *
+     * @var string
      */
     public $body;
 
     /**
      * Chapter
-     * @var Chapter
      *
      * @ManyToOne(targetEntity="App\Entity\Chapter")
      * @JoinColumn(name="chapter_id", referencedColumnName="_id")
+     *
+     * @var Chapter
      */
     protected $chapter;
 
     /**
      * User
-     * @var User
      *
      * @ManyToOne(targetEntity="App\Entity\User")
      * @JoinColumn(name="user_id", referencedColumnName="_id")
+     *
+     * @var User
      */
     public $user;
 

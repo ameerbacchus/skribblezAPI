@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Resource;
 
 use App\Resource;
@@ -7,7 +6,9 @@ use App\Service\User as UserService;
 
 class User extends Resource
 {
+
     /**
+     *
      * @var \App\Service\User
      */
     private $userService;
@@ -21,6 +22,7 @@ class User extends Resource
     }
 
     /**
+     *
      * @param null $id
      */
     public function get($guid = null)
@@ -37,74 +39,83 @@ class User extends Resource
             return;
         }
 
-        self::response(self::STATUS_OK, ['user' => $user]);
+        self::response(self::STATUS_OK, [
+            'user' => $user
+        ]);
     }
 
-//     /**
-//      * Create user
-//      */
-//     public function post()
-//     {
-//         $email = $this->getSlim()->request()->params('email');
-//         $password = $this->getSlim()->request()->params('password');
+    // /**
+    // * Create user
+    // */
+    // public function post()
+    // {
+    // $email = $this->getSlim()->request()->params('email');
+    // $password = $this->getSlim()->request()->params('password');
 
-//         if (empty($email) || empty($password) || $email === null || $password === null) {
-//             self::response(self::STATUS_BAD_REQUEST);
-//             return;
-//         }
+    // if (empty($email) || empty($password) || $email === null || $password === null) {
+    // self::response(self::STATUS_BAD_REQUEST);
+    // return;
+    // }
 
-//         $user = $this->getUserService()->createUser($email, $password);
+    // $user = $this->getUserService()->createUser($email, $password);
 
-//         self::response(self::STATUS_CREATED, array('user', $user));
-//     }
+    // self::response(self::STATUS_CREATED, array('user', $user));
+    // }
 
-//     /**
-//      * Update user
-//      */
-//     public function put($id)
-//     {
-//         $email = $this->getSlim()->request()->params('email');
-//         $password = $this->getSlim()->request()->params('password');
+    // /**
+    // * Update user
+    // */
+    // public function put($id)
+    // {
+    // $email = $this->getSlim()->request()->params('email');
+    // $password = $this->getSlim()->request()->params('password');
 
-//         if (empty($email) && empty($password) || $email === null && $password === null) {
-//             self::response(self::STATUS_BAD_REQUEST);
-//             return;
-//         }
+    // if (empty($email) && empty($password) || $email === null && $password === null) {
+    // self::response(self::STATUS_BAD_REQUEST);
+    // return;
+    // }
 
-//         $user = $this->getUserService()->updateUser($id, $email, $password);
+    // $user = $this->getUserService()->updateUser($id, $email, $password);
 
-//         if ($user === null) {
-//             self::response(self::STATUS_NOT_IMPLEMENTED);
-//             return;
-//         }
+    // if ($user === null) {
+    // self::response(self::STATUS_NOT_IMPLEMENTED);
+    // return;
+    // }
 
-//         self::response(self::STATUS_NO_CONTENT);
-//     }
+    // self::response(self::STATUS_NO_CONTENT);
+    // }
 
-//     /**
-//      * @param $id
-//      */
-//     public function delete($id)
-//     {
-//         $status = $this->getUserService()->deleteUser($id);
+    // /**
+    // * @param $id
+    // */
+    // public function delete($id)
+    // {
+    // $status = $this->getUserService()->deleteUser($id);
 
-//         if ($status === false) {
-//             self::response(self::STATUS_NOT_FOUND);
-//             return;
-//         }
+    // if ($status === false) {
+    // self::response(self::STATUS_NOT_FOUND);
+    // return;
+    // }
 
-//         self::response(self::STATUS_OK);
-//     }
+    // self::response(self::STATUS_OK);
+    // }
 
     /**
      * Show options in header
      */
     public function options()
     {
-        self::response(self::STATUS_OK, array(), array('GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'));
+        self::response(self::STATUS_OK, array(), array(
+            'GET',
+            'POST',
+            'PUT',
+            'DELETE',
+            'OPTIONS'
+        ));
     }
 
     /**
+     *
      * @return \App\Service\User
      */
     public function getUserService()
@@ -113,6 +124,7 @@ class User extends Resource
     }
 
     /**
+     *
      * @param \App\Service\User $userService
      */
     public function setUserService($userService)
@@ -121,6 +133,7 @@ class User extends Resource
     }
 
     /**
+     *
      * @return array
      */
     public function getOptions()

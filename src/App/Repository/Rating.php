@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -7,30 +6,29 @@ use Doctrine\ORM\Query\ResultSetMapping;
 
 class Rating extends EntityRepository
 {
+
     /**
      * Queries for a single rating
      *
      * @param string $guid
      * @return Ambigous <
-     * 		\Doctrine\ORM\mixed,
-     * 		NULL,
-     * 		mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         \Doctrine\ORM\mixed,
+     *         NULL,
+     *         mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findRating($guid)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT r
                 FROM App\Entity\Rating r
                 WHERE r.guid = :guid
                 AND r.deleted = 0
-            ')
-            ->setParameter('guid', $guid);
+            ')->setParameter('guid', $guid);
 
         return $q->getOneOrNullResult();
     }
@@ -40,18 +38,17 @@ class Rating extends EntityRepository
      *
      * @param string $chapterGuid
      * @return Ambigous <
-     * 		multitype:,
-     * 		\Doctrine\ORM\mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         multitype:,
+     *         \Doctrine\ORM\mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findRatings($chapterGuid, $offset = 0, $limit = 40)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT r, u, c
                 FROM App\Entity\Rating
                 LEFT JOIN r.user u
@@ -73,19 +70,18 @@ class Rating extends EntityRepository
      * @param string $chapterGuid
      * @param string $userGuid
      * @return Ambigous <
-     * 		\Doctrine\ORM\mixed,
-     * 		NULL,
-     * 		mixed,
-     * 		\Doctrine\ORM\Internal\Hydration\mixed,
-     * 		\Doctrine\DBAL\Driver\Statement,
-     * 		\Doctrine\Common\Cache\mixed
-     * >
+     *         \Doctrine\ORM\mixed,
+     *         NULL,
+     *         mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed
+     *         >
      */
     public function findUserRating($chapterGuid, $userGuid)
     {
         $em = $this->getEntityManager();
-        $q = $em->
-            createQuery('
+        $q = $em->createQuery('
                 SELECT r, c, u
                 FROM App\Entity\Rating r
                 LEFT JOIN r.chapter c
@@ -120,14 +116,10 @@ class Rating extends EntityRepository
         ';
 
         $rsm = new ResultSetMapping();
-        $rsm
-            ->addScalarResult('avgScore', 'score')
-            ->addScalarResult('ratingCount', 'count');
+        $rsm->addScalarResult('avgScore', 'score')->addScalarResult('ratingCount', 'count');
 
         $em = $this->getEntityManager();
-        $q = $em
-            ->createNativeQuery($sql, $rsm)
-            ->setParameter('guid', $chapterGuid);
+        $q = $em->createNativeQuery($sql, $rsm)->setParameter('guid', $chapterGuid);
 
         return $q->getOneOrNullResult();
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Service;
 
 use App\Service;
@@ -7,6 +6,7 @@ use App\Entity\Base as BaseEntity;
 
 class Base extends Service
 {
+
     /**
      * Marks an entity as deleted
      *

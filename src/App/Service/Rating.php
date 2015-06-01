@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Service;
 
 use App\Service;
@@ -9,6 +8,7 @@ use App\Entity\Chapter as ChapterEntity;
 
 class Rating extends Base
 {
+
     /**
      * Get a single rating
      *
@@ -59,8 +59,7 @@ class Rating extends Base
     public function createRating(ChapterEntity $chapter, UserEntity $user, $score)
     {
         $newRating = new RatingEntity();
-        $newRating
-            ->setChapter($chapter)
+        $newRating->setChapter($chapter)
             ->setUser($user)
             ->setScore($score);
 

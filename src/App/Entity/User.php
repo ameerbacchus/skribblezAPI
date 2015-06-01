@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Entity;
@@ -14,33 +13,37 @@ class User extends Base
 
     /**
      * Type of user (enumeration): Facebook, Twitter, Google, etc...
-     * @var integer
      *
      * @Column(name="type", type="integer")
+     *
+     * @var integer
      */
     protected $type;
 
     /**
      * UID - corresponds to a social network id (Facebook, Twitter, Google, etc...)
-     * @var string
      *
      * @Column(name="uid", type="string", length=50)
+     *
+     * @var string
      */
     protected $uid;
 
     /**
      * First Name
-     * @var string
      *
      * @Column(name="first_name", type="string", length=100)
+     *
+     * @var string
      */
     public $firstName;
 
     /**
      * First Name
-     * @var string
      *
      * @Column(name="last_name", type="string", length=100)
+     *
+     * @var string
      */
     public $lastName;
 
