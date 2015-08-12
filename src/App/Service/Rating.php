@@ -45,6 +45,12 @@ class Rating extends Base
     {
         $repository = $this->getRepo();
         $data = $repository->findRatingData($chapter->getGuid());
+
+        // the query is returning the values as strings; we want numbers
+        foreach ($data as $key => $val) {
+            $data[$key] = floatval($val);
+        }
+
         return $data;
     }
 

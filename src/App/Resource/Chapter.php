@@ -119,11 +119,14 @@ class Chapter extends Resource
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $authorGuid = $request->params('author'); // @todo -- get logged in user
+        $json = $request->getBody();
+        $params = json_decode($json);
+
+        $authorGuid = $params->author;
         $author = $this->getUserService()->getUser($authorGuid);
 
-        $title = $request->params('title');
-        $body = $request->params('body');
+        $title = $params->title;
+        $body = $params->body;
 
         $newStarter = $this->getChapterService()->createChapter($author, $body, 1, $title);
 
@@ -141,6 +144,8 @@ class Chapter extends Resource
     {
         $slim = $this->getSlim();
         $request = $slim->request();
+
+        // @todo -- get JSON body
 
         $authorGuid = $request->params('author'); // @todo -- get logged in user
         $author = $this->getUserService()->getUser($authorGuid);
@@ -170,6 +175,8 @@ class Chapter extends Resource
     {
         $slim = $this->getSlim();
         $request = $slim->request();
+
+        // @todo -- get JSON body
 
         $body = $request->params('body');
         $title = $request->params('title');
