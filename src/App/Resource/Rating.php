@@ -37,8 +37,12 @@ class Rating extends Resource
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $score = $request->params('score');
-        $user = $this->getUserService()->getUser($request->params('user'));
+        $json = $request->getBody();
+        $params = json_decode($json);
+
+        $score = $params->score;
+        $userId = $params->user;    // @todo -- need proper authentication
+        $user = $this->getUserService()->getUser($userId);
         $chapter = $this->getChapterService()->getChapter($chapterGuid);
 
         $userRating = $this->getRatingService()->getUserRating($chapter, $user);
@@ -61,16 +65,27 @@ class Rating extends Resource
      *
      * @todo -- auth check
      *
-     * @param string $chapterGuid
+     * @param string $guid
      */
     public function patchRating($guid)
     {
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $score = $request->params('score');
+        $json = $request->getBody();
+        $params = json_decode($json);
 
+        $score = $params->score;
+        $userId = $params->user;    // @todo -- need proper authentication
         $rating = $this->getRatingService()->getRating($guid);
+
+        if ($userId !== $rating->getUser()->getGuid()) {
+            self::response(self::STATUS_METHOD_NOT_ALLOWED, [
+                'error' => 'User cannot update a rating they do not own. '
+            ]);
+            return;
+        }
+
         $rating = $this->getRatingService()->updateRating($rating, $score);
 
         self::response(self::STATUS_OK, [

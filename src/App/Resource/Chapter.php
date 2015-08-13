@@ -91,7 +91,7 @@ class Chapter extends Resource
         $comments = $this->getCommentService()->getComments($guid);
 
         $userRating = null;
-        $user = $this->getUserService()->getUser('author1'); // @todo -- get logged in user
+        $user = $this->getUserService()->getUser('author4'); // @todo -- get logged in user
         if ($user) {
             $userRating = $this->getRatingService()->getUserRating($chapter, $user);
         }

@@ -24,8 +24,9 @@ class Rating extends EntityRepository
     {
         $em = $this->getEntityManager();
         $q = $em->createQuery('
-                SELECT r
+                SELECT r, u
                 FROM App\Entity\Rating r
+                LEFT JOIN r.user u
                 WHERE r.guid = :guid
                 AND r.deleted = 0
             ')->setParameter('guid', $guid);

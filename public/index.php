@@ -7,7 +7,7 @@ use App\Resource;
 // @todo -- this probably isn't the right place for this
 // @todo -- this domain needs to be updated to go live; this should be in a config somewhere
 header('Access-Control-Allow-Origin: http://dev-local.skribblez.com:8381');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE');
 header('Access-Control-Allow-Headers: Accept, X-Requested-With, Content-Type');
 
 $app = new Slim();
@@ -101,6 +101,12 @@ $app->delete('/comment/(:guid)(/)', function ($guid) {
 $app->post('/chapter/(:guid)/rating(/)', function ($guid) {
     $resource = Resource::load('rating');
     $resource->postRating($guid);
+});
+
+// OPTIONS - POST rating
+$app->options('/chapter/(:guid)/rating(/)', function($guid) {
+    $resource = \App\Resource::load('Rating');
+    $resource->options();
 });
 
 // PATCH rating
