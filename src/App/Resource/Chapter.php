@@ -145,12 +145,13 @@ class Chapter extends Resource
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        // @todo -- get JSON body
+        $json = $request->getBody();
+        $params = json_decode($json);
 
-        $authorGuid = $request->params('author'); // @todo -- get logged in user
+        $authorGuid = $params->author;
         $author = $this->getUserService()->getUser($authorGuid);
 
-        $body = $request->params('body');
+        $body = $params->body;
         $prevChapter = $this->getChapterService()->getChapter($prevGuid);
         $parentChapter = $prevChapter->isStarter() ? $prevChapter : $prevChapter->getParent();
         $sequence = $prevChapter->getSequence() + 1;

@@ -50,8 +50,12 @@ class Comment extends Resource
         $slim = $this->getSlim();
         $request = $slim->request();
 
-        $body = $request->params('body');
-        $user = $this->getUserService()->getUser($request->params('user'));
+        $json = $request->getBody();
+        $params = json_decode($json);
+
+        $body = $params->body;
+        $userId = $params->user;
+        $user = $this->getUserService()->getUser($userId);
         $chapter = $this->getChapterService()->getChapter($chapterGuid);
 
         $newComment = $this->getCommentService()->createComment($chapter, $user, $body);

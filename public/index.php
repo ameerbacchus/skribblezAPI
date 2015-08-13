@@ -78,6 +78,12 @@ $app->post('/chapter/(:guid)/comment(/)', function ($guid) {
     $resource->postComment($guid);
 });
 
+// OPTIONS - POST comment
+$app->options('/chapter/(:guid)/comment(/)', function($guid) {
+    $resource = \App\Resource::load('Comment');
+    $resource->options();
+});
+
 // PATCH comment
 $app->patch('/comment/(:guid)(/)', function ($guid) {
     $resource = Resource::load('comment');
@@ -104,7 +110,7 @@ $app->patch('/rating/(:guid)(/)', function ($guid) {
 });
 
 // Options
-$app->options('/:resourceName(/)', function ($resourceName, $id = null) {
+$app->options('/:resourceName(/)(:id)', function ($resourceName, $id = null) {
     $rmap = array(
         'starter' => 'Chapter',
         'chapter' => 'Chapter',
