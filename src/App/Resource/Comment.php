@@ -53,7 +53,7 @@ class Comment extends Resource
         $params = json_decode($json);
 
         $body = $params->body;
-        $userId = $params->user;
+        $userId = $params->user;            // @todo -- need proper authentication
         $user = $this->getUserService()->getUser($userId);
         $chapter = $this->getChapterService()->getChapter($chapterGuid);
 
@@ -79,8 +79,7 @@ class Comment extends Resource
         $params = json_decode($json);
 
         $body = $params->body;
-        $userId = $params->user;
-
+        $userId = $params->user;            // @todo -- need proper authentication
         $comment = $this->getCommentService()->getComment($guid);
 
         if ($userId !== $comment->getUser()->getGuid()) {
