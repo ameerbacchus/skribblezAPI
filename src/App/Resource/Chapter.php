@@ -146,7 +146,7 @@ class Chapter extends Resource
         $json = $request->getBody();
         $params = json_decode($json);
 
-        $authorGuid = $params->author;
+        $authorGuid = $params->author;      // @todo -- need proper authentication
         $author = $this->getUserService()->getUser($authorGuid);
 
         $body = $params->body;
@@ -174,13 +174,22 @@ class Chapter extends Resource
     {
         $slim = $this->getSlim();
         $request = $slim->request();
+        $json = $request->getBody();
+        $params = json_decode($json);
 
-        // @todo -- get JSON body
-
-        $body = $request->params('body');
-        $title = $request->params('title');
+        $body = $params->body;
+        $title = isset($params->title) ? $params->title : null;
+        $authorId = $params->author;          // @todo -- need proper authentication
 
         $chapter = $this->getChapterService()->getChapter($guid);
+
+        if ($authorId !== $chapter->getAuthor()->getGuid()) {
+            self::response(self::STATUS_METHOD_NOT_ALLOWED, [
+                'error' => 'User cannot update a chapter they do not own. '
+            ]);
+            return;
+        }
+
         $chapter = $this->getChapterService()->updateChapter($chapter, $body, $title);
 
         self::response(self::STATUS_OK, [
