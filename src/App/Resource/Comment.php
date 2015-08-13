@@ -49,7 +49,6 @@ class Comment extends Resource
     {
         $slim = $this->getSlim();
         $request = $slim->request();
-
         $json = $request->getBody();
         $params = json_decode($json);
 
@@ -76,10 +75,21 @@ class Comment extends Resource
     {
         $slim = $this->getSlim();
         $request = $slim->request();
+        $json = $request->getBody();
+        $params = json_decode($json);
 
-        $body = $request->params('body');
+        $body = $params->body;
+        $userId = $params->user;
 
         $comment = $this->getCommentService()->getComment($guid);
+
+        if ($userId !== $comment->getUser()->getGuid()) {
+            self::response(self::STATUS_METHOD_NOT_ALLOWED, [
+                'error' => 'User cannot update a comment they do not own. '
+            ]);
+            return;
+        }
+
         $comment = $this->getCommentService()->updateComment($comment, $body);
 
         self::response(self::STATUS_OK, [

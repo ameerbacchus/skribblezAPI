@@ -118,7 +118,6 @@ class Chapter extends Resource
     {
         $slim = $this->getSlim();
         $request = $slim->request();
-
         $json = $request->getBody();
         $params = json_decode($json);
 
@@ -144,7 +143,6 @@ class Chapter extends Resource
     {
         $slim = $this->getSlim();
         $request = $slim->request();
-
         $json = $request->getBody();
         $params = json_decode($json);
 
